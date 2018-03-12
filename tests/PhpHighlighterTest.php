@@ -70,7 +70,7 @@ class PhpHighlighterTest extends TestCase
         $this->assertContains('protected', $html);
         $this->assertContains('__construct', $html);
         $this->assertContains('$this', $html);
-        
+
         $this->assertRegExp('{class="active".+__construct}m', $html);
         $this->assertNotContains('@var', $html);
         $this->assertNotContains('Example', $html);
@@ -97,7 +97,7 @@ class PhpHighlighterTest extends TestCase
     function testHighlightFile()
     {
         $html = PhpHighlighter::file(__FILE__, __LINE__, [-5, 5]);
-        
+
         $this->assertInternalType('string', $html);
 
         $this->assertContains('<ol start="' . (__LINE__ - 4 - 5) . '">', $html);

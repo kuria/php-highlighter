@@ -32,7 +32,7 @@ abstract class PhpHighlighter
         return static::process((string) @highlight_string($phpCode, true), $activeLine, $lineRange, $className);
     }
 
-    protected static function process(string $html, ?int $activeLine, ?array $lineRange, ?string $className): string
+    private static function process(string $html, ?int $activeLine, ?array $lineRange, ?string $className): string
     {
         $lines = static::split($html);
 
@@ -56,7 +56,7 @@ abstract class PhpHighlighter
         return $output;
     }
 
-    protected static function split(string $html): array
+    private static function split(string $html): array
     {
         $parser = new SimpleHtmlParser($html);
 
@@ -71,7 +71,7 @@ abstract class PhpHighlighter
         return explode('<br />', $parser->getSlice($parser->current()['end'], $parser->getLength() - 15));
     }
 
-    protected static function normalizeLineRange(?array $lineRange, ?int $activeLine, int $totalLines): array
+    private static function normalizeLineRange(?array $lineRange, ?int $activeLine, int $totalLines): array
     {
         $lastLine = $totalLines - 1;
 

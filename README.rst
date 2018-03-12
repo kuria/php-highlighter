@@ -3,6 +3,9 @@ PHP highlighter
 
 PHP code highlighter.
 
+.. image:: https://travis-ci.org/kuria/php-highlighter.svg?branch=master
+   :target: https://travis-ci.org/kuria/php-highlighter
+
 .. contents::
 
 

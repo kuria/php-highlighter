@@ -42,8 +42,8 @@ class HighlightedLineFixerTest extends TestCase
     {
         $this->assertSame(
             '<span style="color: red">foo</span>',
-            $this->fixer->fix('<span style="color: red">foo'))
-        ;
+            $this->fixer->fix('<span style="color: red">foo')
+        );
 
         $this->assertSame(
             '<span style="color: red"><span style="color: green">bar</span></span>',

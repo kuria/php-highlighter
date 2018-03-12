@@ -11,62 +11,60 @@ use Kuria\SimpleHtmlParser\SimpleHtmlParser;
  */
 class HighlightedLineFixer
 {
-    /** @var SimpleHtmlParser */
-    protected $parser;
     /** @var string */
-    protected $line;
+    private $line;
     /** @var string[] */
-    protected $openSpans = [];
+    private $openSpans = [];
     /** @var int */
-    protected $remainingOpenSpansOnLine;
+    private $remainingOpenSpansOnLine;
     /** @var int */
-    protected $contentOffset;
+    private $contentOffset;
 
     function fix(string $line): string
     {
-        $this->parser = new SimpleHtmlParser($line);
+        $parser = new SimpleHtmlParser($line);
         $this->line = '';
         $this->contentOffset = 0;
         $this->remainingOpenSpansOnLine = 0;
 
-        for (; $this->parser->valid(); $this->parser->next()) {
-            $elem = $this->parser->current();
+        for (; $parser->valid(); $parser->next()) {
+            /** @var array $elem */
+            $elem = $parser->current();
 
             if ($elem['type'] === SimpleHtmlParser::OPENING_TAG && $elem['name'] === 'span') {
-                $this->handleSpanOpen($elem);
+                $this->handleSpanOpen($parser, $elem);
             } elseif ($elem['type'] === SimpleHtmlParser::CLOSING_TAG && $elem['name'] === 'span') {
                 if (!empty($this->openSpans)) {
-                    $this->handleSpanClose($elem);
+                    $this->handleSpanClose($parser, $elem);
                 } else {
-                    $this->appendContent($elem['start'], $elem['end']);
+                    $this->appendContent($parser, $elem['start'], $elem['end']);
                 }
             }
         }
 
-        $this->finishLine();
+        $this->finishLine($parser);
         $line = $this->line;
 
-        $this->parser = null;
-        $this->line = null;
+        $this->line = '';
 
         return $line;
     }
 
-    protected function handleSpanOpen(array $span): void
+    private function handleSpanOpen(SimpleHtmlParser $parser, array $span): void
     {
-        $this->appendContent($span['start'], $span['end']);
-        $spanHtml = $this->parser->getHtml($span);
+        $this->appendContent($parser, $span['start'], $span['end']);
+        $spanHtml = $parser->getHtml($span);
 
         $this->line .= $spanHtml;
         $this->openSpans[] = $spanHtml;
         ++$this->remainingOpenSpansOnLine;
     }
 
-    protected function handleSpanClose(array $spanClose): void
+    private function handleSpanClose($parser, array $spanClose): void
     {
         $openSpan = array_pop($this->openSpans);
 
-        $this->appendContent($spanClose['start'], $spanClose['end']);
+        $this->appendContent($parser, $spanClose['start'], $spanClose['end']);
 
         if ($this->remainingOpenSpansOnLine > 0) {
             // <span> was opened on this line
@@ -78,9 +76,9 @@ class HighlightedLineFixer
         }
     }
 
-    protected function finishLine(): void
+    private function finishLine(SimpleHtmlParser $parser): void
     {
-        $this->line .= $this->parser->getSlice($this->contentOffset, $this->parser->getLength());
+        $this->line .= $parser->getSlice($this->contentOffset, $parser->getLength());
 
         $this->line = trim($this->line);
 
@@ -93,9 +91,9 @@ class HighlightedLineFixer
         }
     }
 
-    protected function appendContent(int $until, int $newContentOffset): void
+    private function appendContent(SimpleHtmlParser $parser, int $until, int $newContentOffset): void
     {
-        $this->line .= $this->parser->getSlice($this->contentOffset, $until);
+        $this->line .= $parser->getSlice($this->contentOffset, $until);
         $this->contentOffset = $newContentOffset;
     }
 }
