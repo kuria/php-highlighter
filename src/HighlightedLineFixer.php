@@ -83,11 +83,11 @@ class HighlightedLineFixer
         $this->line = trim($this->line);
 
         if ($this->line !== '') {
-            for ($i = sizeof($this->openSpans) - $this->remainingOpenSpansOnLine - 1; isset($this->openSpans[$i]); --$i) {
+            for ($i = count($this->openSpans) - $this->remainingOpenSpansOnLine - 1; isset($this->openSpans[$i]); --$i) {
                 $this->line = $this->openSpans[$i] . $this->line;
             }
 
-            $this->line .= str_repeat('</span>', sizeof($this->openSpans));
+            $this->line .= str_repeat('</span>', count($this->openSpans));
         }
     }
 

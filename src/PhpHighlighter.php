@@ -36,7 +36,7 @@ abstract class PhpHighlighter
     {
         $lines = static::split($html);
 
-        [$start, $end] = static::normalizeLineRange($lineRange, $activeLine, sizeof($lines));
+        [$start, $end] = static::normalizeLineRange($lineRange, $activeLine, count($lines));
 
         $lineFixer = new HighlightedLineFixer();
 
