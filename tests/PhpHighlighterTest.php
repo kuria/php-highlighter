@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpHighlighterTest extends TestCase
 {
-    function testHighlight()
+    function testShouldHighlight()
     {
         $html = PhpHighlighter::code($this->getTestCode());
 
@@ -23,12 +23,12 @@ class PhpHighlighterTest extends TestCase
         $this->assertNotContains('start=', $html);
     }
 
-    function testHighlightEmptyString()
+    function testShouldHighlightEmptyString()
     {
         $this->assertSame("<ol>\n<li></li>\n</ol>\n", PhpHighlighter::code(''));
     }
 
-    function testHighlightWithCustomClass()
+    function testShouldHighlightWithCustomClass()
     {
         $html = PhpHighlighter::code($this->getTestCode(), null, null, 'custom');
 
@@ -38,7 +38,7 @@ class PhpHighlighterTest extends TestCase
         $this->assertNotContains('class="code-preview"', $html);
     }
 
-    function testHighlightWithActiveLine()
+    function testShouldHighlightWithActiveLine()
     {
         $html = PhpHighlighter::code($this->getTestCode(), 11);
 
@@ -58,7 +58,7 @@ class PhpHighlighterTest extends TestCase
     /**
      * @dataProvider provideLineRanges
      */
-    function testHighlightWithActiveLineAndRange(array $lineRange)
+    function testShouldHighlightWithActiveLineAndRange(array $lineRange)
     {
         $html = PhpHighlighter::code($this->getTestCode(), 11, $lineRange);
 
@@ -79,7 +79,7 @@ class PhpHighlighterTest extends TestCase
         $this->assertNotContains('echo', $html);
     }
 
-    function testExceptionOnRelativeLineRangeWithoutActiveLine()
+    function testShouldThrowExceptionOnRelativeLineRangeWithoutActiveLine()
     {
         $this->expectException(\LogicException::class);
 
@@ -94,7 +94,7 @@ class PhpHighlighterTest extends TestCase
         ];
     }
 
-    function testHighlightFile()
+    function testShouldHighlightFile()
     {
         $html = PhpHighlighter::file(__FILE__, __LINE__, [-5, 5]);
 

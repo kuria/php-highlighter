@@ -14,13 +14,13 @@ class HighlightedLineFixerTest extends TestCase
         $this->fixer = new HighlightedLineFixer();
     }
 
-    function testFixEmpty()
+    function testShouldFixEmpty()
     {
         $this->assertSame('', $this->fixer->fix(''));
         $this->assertSame('', $this->fixer->fix(' '));
     }
 
-    function testFixSimpleLine()
+    function testShouldFixSimpleLine()
     {
         $this->assertSame('<span style="color: red">red</span>', $this->fixer->fix('<span style="color: red">red</span>'));
         $this->assertSame('foo', $this->fixer->fix(' foo '));
