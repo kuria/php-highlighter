@@ -13,10 +13,13 @@ class HighlightedLineFixer
 {
     /** @var string */
     private $line;
+
     /** @var string[] */
     private $openSpans = [];
+
     /** @var int */
     private $remainingOpenSpansOnLine;
+
     /** @var int */
     private $contentOffset;
 
