@@ -61,8 +61,8 @@ class HighlightedLineFixerTest extends TestCase
         );
 
         $this->assertSame(
-            'mlem',
-            $this->fixer->fix('mlem')
+            'quux',
+            $this->fixer->fix('quux')
         );
     }
 }
