@@ -2,9 +2,9 @@
 
 namespace Kuria\PhpHighlighter;
 
-use PHPUnit\Framework\TestCase;
+use Kuria\DevMeta\Test;
 
-class HighlightedLineFixerTest extends TestCase
+class HighlightedLineFixerTest extends Test
 {
     /** @var HighlightedLineFixer */
     private $fixer;

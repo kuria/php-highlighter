@@ -2,9 +2,9 @@
 
 namespace Kuria\PhpHighlighter;
 
-use PHPUnit\Framework\TestCase;
+use Kuria\DevMeta\Test;
 
-class PhpHighlighterTest extends TestCase
+class PhpHighlighterTest extends Test
 {
     function testShouldHighlight()
     {
