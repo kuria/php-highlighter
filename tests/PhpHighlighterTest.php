@@ -86,7 +86,7 @@ class PhpHighlighterTest extends Test
         PhpHighlighter::code($this->getTestCode(), null, [-1, 1]);
     }
 
-    function provideLineRanges(): array
+    function provideLineRanges()
     {
         return [
             'Relative' => [[-2, 2]],
