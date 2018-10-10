@@ -46,7 +46,7 @@ abstract class PhpHighlighter
             . ">\n";
 
         for ($i = $start; $i <= $end; ++$i) {
-            $output .= '<li' . ($activeLine !== null && $i + 1 === $activeLine ? ' class="active"' : '') . '>'
+            $output .= '<li' . ($activeLine !== null && $activeLine === $i + 1 ? ' class="active"' : '') . '>'
                 . $lineFixer->fix($lines[$i])
                 . "</li>\n";
         }
