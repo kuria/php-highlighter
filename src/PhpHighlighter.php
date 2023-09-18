@@ -19,22 +19,38 @@ abstract class PhpHighlighter
     /**
      * Preview code from a PHP file
      */
-    static function file(string $file, ?int $activeLine = null, ?array $lineRange = null, ?string $className = null): string
+    static function file(string $file, ?int $activeLine = null, ?array $lineRange = null, ?string $className = null): ?string
     {
-        return static::process((string) @highlight_file($file, true), $activeLine, $lineRange, $className);
+        $html = @highlight_file($file, true);
+
+        if ($html === false) {
+            return null;
+        }
+
+        return static::process($html, $activeLine, $lineRange, $className);
     }
 
     /**
      * Preview code from a string containing PHP code
      */
-    static function code(string $phpCode, ?int $activeLine = null, ?array $lineRange = null, ?string $className = null): string
+    static function code(string $phpCode, ?int $activeLine = null, ?array $lineRange = null, ?string $className = null): ?string
     {
-        return static::process((string) @highlight_string($phpCode, true), $activeLine, $lineRange, $className);
+        $html = @highlight_string($phpCode, true);
+
+        if ($html === false) {
+            return null;
+        }
+
+        return static::process($html, $activeLine, $lineRange, $className);
     }
 
     private static function process(string $html, ?int $activeLine, ?array $lineRange, ?string $className): string
     {
         $lines = static::split($html);
+
+        if (empty($lines)) {
+            return '';
+        }
 
         [$start, $end] = static::normalizeLineRange($lineRange, $activeLine, count($lines));
 

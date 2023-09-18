@@ -107,6 +107,11 @@ class PhpHighlighterTest extends Test
         $this->assertContains('__LINE__', $html);
     }
 
+    function testShouldNotCrashIfHighlightFileFails()
+    {
+        $this->assertNull(PhpHighlighter::file(__DIR__ . '/__nonexistent-file', 123, [-5, 5]));
+    }
+
     private function getTestCode()
     {
         return <<<'CODE'
