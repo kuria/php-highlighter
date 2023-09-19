@@ -23,7 +23,7 @@ abstract class PhpHighlighter
     {
         $html = @highlight_file($file, true);
 
-        if ($html === false) {
+        if (!is_string($html)) {
             return null;
         }
 
@@ -37,7 +37,7 @@ abstract class PhpHighlighter
     {
         $html = @highlight_string($phpCode, true);
 
-        if ($html === false) {
+        if (!is_string($html)) {
             return null;
         }
 
