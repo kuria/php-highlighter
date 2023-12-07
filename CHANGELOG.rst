@@ -1,6 +1,11 @@
 Changelog
 #########
 
+3.0.2
+*****
+
+- support the different HTML output of PHP 8.3.0
+
 
 3.0.1
 *****

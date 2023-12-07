@@ -84,7 +84,11 @@ abstract class PhpHighlighter
             return [];
         }
 
-        return explode('<br />', $parser->getSlice($parser->current()['end'], $parser->getLength() - 15));
+        if (PHP_VERSION_ID >= 80300) {
+            return preg_split('{\R}', $parser->getSlice($parser->current()['end'], $parser->getLength() - 13));
+        } else {
+            return explode('<br />', $parser->getSlice($parser->current()['end'], $parser->getLength() - 15));
+        }
     }
 
     private static function normalizeLineRange(?array $lineRange, ?int $activeLine, int $totalLines): array
