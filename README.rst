@@ -60,6 +60,15 @@ Output:
    </ol>
 
 
+.. NOTE::
+
+  In PHP 8.3, output of the ``highlight_file()`` and ``highlight_string()`` functions
+  (which are used internally) has `changed <https://php.watch/versions/8.3/highlight_file-highlight_string-html-changes>`_.
+
+  If you're using PHP 8.3 or newer, the output will contain regular spaces instead of ``&nbsp;`` entities. You can use
+  ``white-space: pre;`` in your CSS to fix this.
+
+
 Marking an active line
 ======================
 
