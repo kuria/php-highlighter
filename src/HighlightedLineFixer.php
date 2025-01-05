@@ -83,7 +83,9 @@ class HighlightedLineFixer
     {
         $this->line .= $parser->getSlice($this->contentOffset, $parser->getLength());
 
-        $this->line = trim($this->line);
+        if (PHP_VERSION_ID < 80300) {
+            $this->line = trim($this->line);
+        }
 
         if ($this->line !== '') {
             for ($i = count($this->openSpans) - $this->remainingOpenSpansOnLine - 1; isset($this->openSpans[$i]); --$i) {
